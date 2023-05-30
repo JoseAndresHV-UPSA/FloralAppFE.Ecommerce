@@ -1,9 +1,8 @@
-﻿
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace FloralAppFE.Ecommerce.Controllers
 {
-    public class OrderController : Controller
+    public class CartController : Controller
     {
         public IActionResult Index()
         {
