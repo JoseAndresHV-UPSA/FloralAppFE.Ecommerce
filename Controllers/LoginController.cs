@@ -5,6 +5,7 @@ using System.Web;
 using System.Text;
 using FloralAppFE.Ecommerce.Models;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace FloralAppFE.Ecommerce.Controllers
 {
@@ -13,6 +14,7 @@ namespace FloralAppFE.Ecommerce.Controllers
         public IActionResult Index()
         {
             ViewBag.HideLayout = true;
+            TempData["token"] = null;
             return View();
         }
 
@@ -36,7 +38,7 @@ namespace FloralAppFE.Ecommerce.Controllers
             if (response.IsSuccessStatusCode)
             {
                 var responseContent = await response.Content.ReadAsStringAsync();
-                var token = JsonConvert.DeserializeObject<ResponseModel<string>>(responseContent)!.Data;
+                var token = JsonConvert.DeserializeObject<Response<string>>(responseContent)!.Data;
                 TempData["token"] = token;
                 
                 return RedirectToAction("Index", "Home");
