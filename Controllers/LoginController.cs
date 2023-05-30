@@ -34,20 +34,19 @@ namespace FloralAppFE.Ecommerce.Controllers
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             var response = await httpClient.PostAsync($"{apiUrl}/auth/login", content);
+            var responseContent = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
+            var result = JsonConvert.DeserializeObject<Response<object>>(responseContent);
+
+            if (result!.Success)
             {
-                var responseContent = await response.Content.ReadAsStringAsync();
-                var token = JsonConvert.DeserializeObject<Response<string>>(responseContent)!.Data;
+                var token = result!.Data;
                 TempData["token"] = token;
-                
+
                 return RedirectToAction("Index", "Home");
             }
-            else
-            {
-                ModelState.AddModelError("", "Invalid login attempt");
-                return View(model);
-            }
+
+            return RedirectToAction("Index", "Login");
         }
     }
 }

@@ -36,11 +36,8 @@ namespace FloralAppFE.Ecommerce.Controllers
 
                 return RedirectToAction("Index", "Login");
             }
-            else
-            {
-                ModelState.AddModelError("", "Invalid creation attempt");
-                return View(model);
-            }
+
+            return RedirectToAction("Index", "Register");
         }
     }
 }
